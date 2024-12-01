@@ -6,22 +6,16 @@ from django.http import HttpResponse
 from django. contrib import messages
 from django. contrib. auth import login, logout, authenticate 
 from django.contrib.auth.decorators import login_required 
-
 from .decorators import role_required 
 from django. forms import DateInput 
 import json
 from django.db.models import F,Q,Sum, Value 
 import math
-
-
+# from weasyprint import HTML 
+from django.template.loader import render_to_string 
 import tempfile 
 from django.urls import reverse
 from django.utils import timezone
-
-
-
-
-
 
 
 # Create your views here.

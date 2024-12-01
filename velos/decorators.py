@@ -12,4 +12,4 @@ def role_required(allowed_roles=[]):
             else:
                 return render(request, "base/404.html")
         return wrap
-    return decorato
+    return decorator
