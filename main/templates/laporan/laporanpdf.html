@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Pemasukan</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2.5cm 1.5cm 3.5cm 1.5cm;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            font-size: 14px;
+        }
+
+        h1, h3 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #000;
+            text-align: center;
+        }
+
+        th {
+            background-color: rgb(216, 216, 216);
+            padding: 8px;
+        }
+
+        td {
+            padding: 8px;
+        }
+
+        .text-right {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        /* Gaya khusus untuk cetak */
+        @media print {
+            .print-button {
+                display: none; /* Sembunyikan tombol saat mencetak */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tombol Cetak -->
+    <div class="print-button" style="text-align: right; margin-bottom: 20px;">
+        <button onclick="window.print()">Cetak PDF</button>
+    </div>
+
+    <!-- Judul Laporan -->
+    <h1>Laporan Pemasukan</h1>
+    <h3>Laporan Pemasukan dari {{ tanggal_mulai|date:'d M Y' }} sampai {{ tanggal_akhir|date:'d M Y' }}</h3>
+
+    <!-- Tabel Total Pemasukan -->
+    <table>
+        <thead>
+            <tr>
+                <th>Nomor Bis</th>
+                <th>Total Pemasukan</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in bis_pemasukan.items %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>Rp.{{ value.total_pemasukan|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <h5>Grand Total Pemasukan: Rp {{ grand_total_pemasukan|floatformat:2 }}</h5>
+    </div>
+
+    <!-- Tabel Layanan Tambahan -->
+    <h3>Total Setiap Layanan Tambahan yang Dipilih</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Layanan Tambahan</th>
+                <th>Total Dipilih</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for layanan, total in total_layanan_tambahan.items %}
+            <tr>
+                <td>{{ layanan }}</td>
+                <td>{{ total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Tabel Kelas Layanan -->
+    <h3>Total Setiap Kelas Layanan yang Dipilih</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Kelas Layanan</th>
+                <th>Total Dipilih</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for kelas, total in total_kelas_layanan.items %}
+            <tr>
+                <td>{{ kelas }}</td>
+                <td>{{ total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Skrip Cetak -->
+    <script>
+        // Sebelum Cetak: Sembunyikan tombol
+        window.addEventListener('beforeprint', () => {
+            document.querySelector('.print-button').style.display = 'none';
+        });
+
+        // Setelah Cetak: Tampilkan kembali tombol
+        window.addEventListener('afterprint', () => {
+            document.querySelector('.print-button').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

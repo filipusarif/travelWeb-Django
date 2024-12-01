@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+{% block content %}
+
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Create Detail Pemesanan</h4>
+            <p class="card-description"> Silahkan isi data detail pemesanan yang ingin ditambahkan </p>
+            <p>Nama Penumpang: {{ pemesananobj.idpenumpang.nama }}</p>
+            <p>Nama Bis: {{ pemesananobj.iddetailkelaslayanan.idbis.nomorbis }}</p>
+            <p>Jadwal Bis: {{ pemesananobj.iddetailkelaslayanan.idbis.jadwal }}</p>
+            <form class="forms-sample" method="POST">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="idlayanantambahan" class="col-sm-3 col-form-label">Layanan Tambahan :</label>
+                    <select class="form-control" name="idlayanantambahan" id="idlayanantambahan">
+                        {% for layanan in layanantambahanobj %}
+                        <option value="{{ layanan.idlayanantambahan }}">{{ layanan.namalayanan }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

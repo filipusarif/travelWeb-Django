@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Pemesanan</title>
+</head>
+<body>
+    <a href="{% url 'create_detailkelaslayanan' %}"><button>Create Detail Kelas Layanan</button></a>
+    <table>
+        <thead>
+            <tr>
+                <th class = "text-center">No</th>
+                <th class = "text-center">ID Detail Kelas Layanan</th>
+                <th class = "text-center">ID Bis</th>
+                <th class = "text-center">ID Kelas Layanan</th>
+                <th class = "text-center">Kapasitas</th>
+                {% if is_owner %}
+                <th class = "text-center" style="width: 200px;">Action</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for i in detailkelaslayananobj %}
+                <td>{{ forloop.counter}}</td>
+                <td>{{ i.iddetailkelaslayanan }}</td>
+                <td>{{ i.idbis }}</td>
+                <td>{{ i.idkelaslayanan }}</td>
+                <td>{{ i.kapasitas }}</td>
+                {% if is_owner %}
+                <td>
+                    <a href="{% url 'update_detailkelaslayanan' i.iddetailkelaslayanan %}"><button>Update detailkelaslayanan</button></a>
+                    <a href="{% url 'delete_detailkelaslayanan' i.iddetailkelaslayanan %}"><button>Delete detailkelaslayanan</button></a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}

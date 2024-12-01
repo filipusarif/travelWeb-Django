@@ -1,0 +1,44 @@
+{% extends "base/base.html" %}
+{% block content %}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Data Kelas Layanan</h4>
+        <p class="card-description"> Berikut adalah data kelas layanan saat ini. </p>
+        </p>
+        <a href="{% url 'create_kelas_layanan' %}"><button  class="btn btn-info"><i class="mdi mdi-plus align-middle"></i>Create Kelas Layanan</button></a>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>ID Kelas Layanan</th>
+                    <th class = "text-center">Nama Kelas Layanan</th>
+                    <th class = "text-center">Harga</th>
+                    <th class = "text-center" style="width: 200px;">Action</th>
+                </tr>
+               
+            </thead>
+          <tbody>
+            <tr>
+                {% for i in kelas_layanan_obj %}
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.idkelaslayanan }}</td>
+                <td>{{ i.namakelaslayanan }}</td>
+                <td class="text-right">Rp{{ i.harga }}</td>
+                <td>
+                    <a href="{% url 'update_kelas_layanan' i.idkelaslayanan %}"><button class="btn btn-warning me-1"><i class="mdi mdi-reload btn-icon-prepend align-middle"></i>Update Kelas Layanan</button></a>
+                    {% if is_owner %}
+                    <a href="{% url 'delete_kelas_layanan' i.idkelaslayanan %}"><button class="btn btn-danger me-1"><i class="mdi mdi-delete btn-icon-prepend align-middle"></i>Delete Kelas Layanan</button></a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <a href="{% url 'read_pemesanan' %}"><button class="btn btn-dark me-1"><i class="mdi mdi-keyboard-backspace align-middle"></i>Kembali Ke Read Pemesanan</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

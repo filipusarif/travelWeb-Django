@@ -1,0 +1,124 @@
+{% extends "base/base.html" %}
+{% block content %}
+
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Laporan Pemasukan Setiap Bis</h4>
+            <p class="card-description">Silahkan pilih rentang tanggal untuk melihat laporan pemasukan</p>
+
+            <!-- Form untuk memilih range tanggal -->
+            <form method="POST" class="forms-sample">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="tanggal_mulai" class="col-sm-3 col-form-label">Tanggal Mulai</label>
+                    <div class="col-sm-9">
+                        <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="{{ tanggal_mulai|date:'Y-m-d' }}" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="tanggal_akhir" class="col-sm-3 col-form-label">Tanggal Akhir</label>
+                    <div class="col-sm-9">
+                        <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" value="{{ tanggal_akhir|date:'Y-m-d' }}" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-info"><i class="mdi mdi-book align-middle"></i>Tampilkan Laporan</button>
+                    <a href="{% url 'read_pemesanan' %}" class="btn btn-dark me-1"><i class="mdi mdi-keyboard-backspace align-middle"></i>Kembali Ke Read Pemesanan</a>
+
+                </div>
+            </form>
+
+            {% if bis_pemasukan %}
+            <hr>
+            <h5 class="card-title">Laporan Pemasukan dari {{ tanggal_mulai|date:'d M Y' }} sampai {{ tanggal_akhir|date:'d M Y' }}</h5>
+
+            <!-- Tabel Laporan Pemasukan per Bis -->
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                  <thead style="background-color: rgb(216, 216, 216)">
+                        <tr>
+                            <th>Nomor Bis</th>
+                            <th>Total Pemasukan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key, value in bis_pemasukan.items %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>Rp.{{ value.total_pemasukan }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <h5 class="text-right">Grand Total Pemasukan : Rp {{ grand_total_pemasukan }}</h5>
+            {% endif %}
+
+            {% if total_layanan_tambahan %}
+            <hr>
+            <h5 class="card-title">Total Setiap Layanan Tambahan yang Dipilih</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                  <thead style="background-color: rgb(216, 216, 216)">
+                        <tr>
+                            <th>Layanan Tambahan</th>
+                            <th>Total Dipilih</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for layanan, total in total_layanan_tambahan.items %}
+                        <tr>
+                            <td>{{ layanan }}</td>
+                            <td>{{ total }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
+            {% if total_kelas_layanan %}
+            <hr>
+            <h5 class="card-title">Total Setiap Kelas Layanan yang Dipilih</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                  <thead style="background-color: rgb(216, 216, 216)">
+                        <tr>
+                            <th>Kelas Layanan</th>
+                            <th>Total Dipilih</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for kelas, total in total_kelas_layanan.items %}
+                        <tr>
+                            <td>{{ kelas }}</td>
+                            <td>{{ total }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
+            {% if messages %}
+            <div class="alert alert-danger mt-4" role="alert">
+                <ul class="mb-0">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% if tanggal_mulai and tanggal_akhir %}
+<form action="{% url 'laporanpdf' %}" method="POST" target="_blank">
+    {% csrf_token %}
+    <input type="hidden" name="tanggal_mulai" value="{{ tanggal_mulai|date:'Y-m-d' }}">
+    <input type="hidden" name="tanggal_akhir" value="{{ tanggal_akhir|date:'Y-m-d' }}">
+    <button type="submit" class="btn btn-success"><i class="mdi mdi-file-pdf align-middle"></i>Ekspor ke PDF</button>
+</form>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,166 @@
+{% extends "base/base.html" %}
+{% block content %}
+<div class="row">
+
+  <div class="col-lg-5 stretch-card grid-margin">
+    <div class="card bg-gradient-danger card-img-holder text-white">
+      <a href="{% url 'create_laporan' %}">
+      <div class="card-body">
+        <h4 class="font-weight-normal mb-3 text-white">Total Penjualan Saat Ini<i class="mdi mdi-chart-line mdi-24px float-right"></i></h4>
+        <h2 class="mb-5 text-white">Rp. {{ grand_total_pemasukan }}</h2>
+      </div>
+      </a>
+    </div>
+  </div>
+  <div class="col-lg-5 stretch-card grid-margin">
+      <div class="card bg-gradient-info card-img-holder text-white">
+        <a href="{% url 'read_pemesanan' %}">
+        <div class="card-body">
+            <h4 class="font-weight-normal mb-3 text-white">Rute Bis Losik Travel  <i class="mdi mdi-bus mdi-24px float-right"></i>
+            </h4>
+            <h2 class="mb-5 text-white">Banyuwangi-Jakarta</h2>
+        </div>
+        </a>
+      </div>
+    </a>
+  </div>
+</div>
+  
+<div class="row">
+  <div class="col-lg-10 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title" type="text-center">Pemasukan Tahun 2024</h4>
+        <canvas id="pemasukan" style="height:250px"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-5 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="card-title" type="text-center">Kelas Layanan</h1>
+        <canvas id="kelaslayanan" style="height:250px"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title" type="text-center">Layanan Tambahan</h4>
+        <canvas id="layanantambahan" style="height:250px"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('kelaslayanan').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: [{% for i in nama_kelas %} '{{i}}', {% endfor %}]
+            ,
+        datasets: [{
+          label: 'Kelas Layanan',
+          data: [{% for i in total_kelas %} '{{i}}', {% endfor %}],
+          backgroundColor: [
+                    'rgba(255, 99, 132)',
+                    'rgba(54, 162, 235)',
+                    'rgba(255, 206, 86)',
+                    'rgba(75, 192, 192)',
+                    'rgba(153, 102, 255)',
+                    'rgba(255, 159, 64)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {}
+      }
+    });
+</script>
+
+<script>
+  var ctx = document.getElementById('layanantambahan').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: [{% for i in nama_layanan %} '{{i}}', {% endfor %}]
+          ,
+      datasets: [{
+        label: 'Layanan Tambahan',
+        data: [{% for i in total_layanan %} '{{i}}', {% endfor %}],
+        backgroundColor: [
+                  'rgba(255, 99, 132)',
+                  'rgba(54, 162, 235)',
+                  'rgba(255, 206, 86)',
+                  'rgba(75, 192, 192)',
+                  'rgba(153, 102, 255)',
+                  'rgba(255, 159, 64)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {}
+    }
+  });
+</script>
+
+<script>
+  var ctx = document.getElementById('pemasukan').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [{% for i in list_bulan %} '{{i}}', {% endfor %}]
+          ,
+      datasets: [{
+        label: 'Pemasukan',
+        data: [{% for i in pemasukan_bulanan %} '{{i}}', {% endfor %}],
+        backgroundColor: [
+                  'rgba(255, 99, 132)',
+                  'rgba(54, 162, 235)',
+                  'rgba(255, 206, 86)',
+                  'rgba(75, 192, 192)',
+                  'rgba(153, 102, 255)',
+                  'rgba(255, 159, 64)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {}
+    }
+  });
+</script>
+
+{% endblock content %}

@@ -1,0 +1,69 @@
+{% extends "base/base.html" %}
+{% block content %}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Data Bis</h4>
+        <p class="card-description">Berikut adalah data bis saat ini.</p>
+        </p>
+        {% if is_owner or is_admin %}
+        <a href="{% url 'create_bis' %}"><button class="btn btn-info"><i class="mdi mdi-plus align-middle"></i>Create Bis</button></a>
+        {% endif %}
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th> No </th>
+              <th> Nomor Bis </th>
+              <th class = "text-center"> Jadwal </th>
+              <th class = "text-center"> Detail Kelas Layanan </th>
+              {% if is_owner or is_admin %}
+              <th class = "text-center" style="width: 200px;"> Action </th>
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in bis_obj %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.nomorbis }}</td>
+                <td>{{ i.jadwal }}</td>
+                <td>
+                    {% if is_owner or is_admin %}
+                    <a href="{% url 'create_detailkelaslayanan' i.idbis %}"><button class="btn btn-outline-info me-1"><i class="mdi mdi-plus align-middle"></i>Tambah Detail Kelas Layanan</button></a>
+                    {% endif %}
+                    <ul>
+                        {% for detail in i.detailkelaslayanan_set.all %}
+                        <li>
+                            <div>Kelas : {{ detail.idkelaslayanan.namakelaslayanan }} - Kapasitas: {{ detail.kapasitas }}</div>
+                            <div>
+                              {% if is_owner or is_admin %}
+                              <a href="{% url 'update_detailkelaslayanan' detail.iddetailkelaslayanan %}"><button class="btn btn-outline-warning me-1"><i class="mdi mdi-reload btn-icon-prepend align-middle"></i>Update</button></a>
+                              {% endif %}
+                              {% if is_owner %}
+                              <a href="{% url 'delete_detailkelaslayanan' detail.iddetailkelaslayanan %}"><button class="btn btn-outline-danger me-1"><i class="mdi mdi-delete btn-icon-prepend align-middle"></i>Delete</button></a>
+                              {% endif %}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+              
+                <td>
+                    {% if is_owner or is_admin %}
+                    <a href="{% url 'update_bis' i.idbis %}"><button class="btn btn-warning me-1"><i class="mdi mdi-reload btn-icon-prepend align-middle"></i>Update Bis</button></a>
+                    {% endif %}
+                    {% if is_owner %}
+                    <a href="{% url 'delete_bis' i.idbis %}"><button class="btn btn-danger me-1"><i class="mdi mdi-delete btn-icon-prepend align-middle"></i>Delete Bis</button></a>
+                    {% endif %}
+                  </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <a href="{% url 'read_pemesanan' %}"><button class="btn btn-dark me-1"><i class="mdi mdi-keyboard-backspace align-middle"></i>Kembali Ke Read Pemesanan</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nota Pemesanan</title>
+    <style>
+        @media print {
+            @page {
+                size: A4;
+                margin: 2.5cm 1.5cm 3.5cm 1.5cm;
+            }
+            body {
+                font-family: Arial, sans-serif;
+                font-size: 12px;
+            }
+            h1, h2, p, ul, li {
+                margin: 0;
+                padding: 0;
+            }
+            h1 {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            h5 {
+                border-bottom: 2px solid black;
+                margin-bottom: 10px;
+            }
+        }
+        table, td, th {
+            border: 1px solid;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body onload="window.print()">
+    <h1>Nota Pemesanan</h1>
+    <h5>_____________________________________________________________________________</h5>
+    <p><strong>ID Pemesanan : </strong>{{ pemesananobj.idpemesanan }}</p>
+    <p><strong>Nama Penumpang : </strong>{{ pemesananobj.idpenumpang.nama }}</p>
+    <p><strong>No telp : </strong>{{ pemesananobj.idpenumpang.notelp }}</p>
+    <p><strong>Email : </strong>{{ pemesananobj.idpenumpang.email }}</p>
+    <p><strong>Kelas layanan : </strong>{{ pemesananobj.iddetailkelaslayanan.idkelaslayanan }}</p>
+    <p><strong>Harga Kelas Layanan : </strong>{{ pemesananobj.iddetailkelaslayanan.idkelaslayanan.harga }}</p>
+    <p>Layanan Tambahan</p>
+    <ul>
+        {% for i in layanantambahan %}
+        <li>{{ i.idlayanantambahan.namalayanan }} - Rp {{ i.idlayanantambahan.harga }}</li>
+        {% endfor %}
+    </ul>
+    <p>Total Biaya Layanan Tambahan : {{ totalbiayalayanantambahan }}</p> 
+    <h2>Total Harga : Rp. {{ total_harga }}</h2>
+    <p>------------------------------------------------------------------------------------------------</p>
+    <p>Terima Kasih Telah Menggunakan Layanan Losik Travel!</p>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "base/base.html" %}
+{% block content %}
+
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Create Bis</h4>
+            <p class="card-description"> Silahkan isi data bis yang ingin ditambahkan </p>
+            <form class="forms-sample" method="post">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="nama" class="col-sm-3 col-form-label">Nomor Bis</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" name="nomorbis" value="{{ request.POST.nomor }}" required/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="nama" class="col-sm-3 col-form-label">Jadwal</label>
+                    <div class="col-sm-9">
+                        <input type="datetime-local" class="form-control" name="jadwal" value="{{ request.POST.jadwal }}" required/>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

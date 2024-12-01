@@ -1,0 +1,78 @@
+{% load static %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+      <li class="nav-item nav-profile">
+        <a class="nav-link">
+          <div class="nav-profile-image">
+            <img src="{% static 'assets/images/admin.jpg' %}" alt="profile">
+            <span class="login-status online"></span>
+            <!--change to offline or busy as needed-->
+          </div>
+          <div class="nav-profile-text d-flex flex-column">
+            {% if is_owner %}
+            <span class="font-weight-bold mb-2">Owner Travelosik</span>
+            {% endif %}
+            {% if is_admin %}
+            <span class="font-weight-bold mb-2">Admin Travelosik</span>
+            {% endif %}
+            {% if is_petugas %}
+            <span class="font-weight-bold mb-2">Petugas Travelosik</span>
+            {% endif %}
+          </div>
+          <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+        </a>
+      </li>
+      {% if is_owner %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'dashboard' %}">
+          <span class="menu-title">Dashboard</span>
+          <i class="mdi mdi-home menu-icon"></i>
+        </a>
+      </li>
+      {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'read_bis' %}">
+          <span class="menu-title">Bis</span>
+          <i class="mdi mdi-bus menu-icon"></i>
+        </a>
+      </li>
+      {% if is_owner or is_admin %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'read_penumpang' %}">
+          <span class="menu-title">Penumpang</span>
+          <i class="mdi mdi-nature-people menu-icon"></i>
+        </a>
+      </li>
+      {% endif %}
+      {% if is_owner or is_admin %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'read_kelas_layanan' %}">
+          <span class="menu-title">Kelas Layanan</span>
+          <i class="mdi mdi-menu menu-icon"></i>
+        </a>
+      </li>
+      {% endif %}
+      {% if is_owner or is_admin %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'read_layanan_tambahan' %}">
+          <span class="menu-title">Layanan Tambahan</span>
+          <i class="mdi mdi-library-plus menu-icon"></i>
+        </a>
+      </li>
+      {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'read_pemesanan' %}">
+          <span class="menu-title">Pemesanan</span>
+          <i class="mdi mdi-clipboard-text menu-icon"></i>
+        </a>
+      </li>
+      {% if is_owner %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'create_laporan' %}">
+          <span class="menu-title">Laporan</span>
+          <i class="mdi mdi-book menu-icon"></i>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>

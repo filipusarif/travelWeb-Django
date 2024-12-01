@@ -1,0 +1,40 @@
+{% extends "base/base.html" %}
+{% block content %}
+
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Create Pemesanan</h4>
+            <p class="card-description">Silahkan isi data pemesanan</p>
+            <form class="forms-sample" method="post">
+                {% csrf_token %}
+                <div class="form-group row">      
+                    <label for="idpenumpang" class="col-sm-3 col-form-label">Nama Penumpang:</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="idpenumpang" id="idpenumpang">
+                            {% for i in penumpang_list %}
+                            <option value="{{ i.idpenumpang }}">{{i.nama}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="iddetailkelaslayanan" class="col-sm-3 col-form-label">Kelas Layanan:</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="iddetailkelaslayanan" id="iddetailkelaslayanan">
+                            {% for detail in detailkelaslayanan_list %}
+                            <option value="{{ detail.iddetailkelaslayanan }}" class="form-control" >
+                            Bis : {{detail.idbis.nomorbis}} - Kelas: {{detail.idkelaslayanan.namakelaslayanan}} - Kapasitas Tersisa: {{detail.kapasitas}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

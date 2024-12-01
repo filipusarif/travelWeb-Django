@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+{% block content %}
+
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Update Detail Pemesanan</h4>
+            <p class="card-description"> Silahkan isi data detail pemesanan yang ingin ditambahkan </p>
+            <p>Nama Penumpang: {{ getdetailpemesanan.idpemesanan.idpenumpang.nama }}</p>
+            <form class="forms-sample" method="POST">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="idlayanantambahan" class="col-sm-3 col-form-label">Layanan Tambahan :</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="layanantambahan" id="idlayanantambahan">
+                            {% for layanan in layanantambahanobj %}
+                            <option value ="{{layanan.idlayanantambahan}}" {% if layanan == getdetailpemesanan.idlayanantambahan %}selected{% endif %}>{{layanan.namalayanan}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-gradient-primary me-2">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
